@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace NyCorp\Shortext;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use NyCorp\Shortext\Commands\ShortextCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class ShortextServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('shortext-php')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_shortext_php_table')
+            ->hasCommand(ShortextCommand::class);
     }
 }

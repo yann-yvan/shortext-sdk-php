@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace NyCorp\Shortext\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ShortextCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'shortext-php';
 
     public $description = 'My command';
 
