@@ -2,9 +2,9 @@
 
 namespace NyCorp\Shortext;
 
+use NyCorp\Shortext\Commands\ShortextCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use NyCorp\Shortext\Commands\ShortextCommand;
 
 class ShortextServiceProvider extends PackageServiceProvider
 {
