@@ -23,12 +23,6 @@ You can install the package via composer:
 composer require nycorp/shortext-php
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="shortext-php-migrations"
-php artisan migrate
-```
 
 You can publish the config file with:
 
@@ -51,9 +45,49 @@ php artisan vendor:publish --tag="shortext-php-views"
 
 ## Usage
 
+Send message:
+
 ```php
-$shortext = new NyCorp\Shortext();
-echo $shortext->echoPhrase('Hello, NyCorp!');
+$sdk =  new ShortextClient(env('SHORTEXT_API_KEY'));
+$builder = new MessageBuilder($phone, from: "<PHONE_ID>", lastname: $lastname);
+$sdk->sendMessage($builder);
+```
+
+You can send text message with:
+
+```php
+$builder->text("hello this is text message");
+```
+
+You can send media message with:
+
+```php
+$builder->media("<YOUR FILE URL>", "document", "document.pdf", "Optional caption");
+$builder->media("<YOUR FILE URL>", "audio");
+$builder->media("<YOUR FILE URL>", "image", caption: "Optional caption");
+$builder->media("<YOUR FILE URL>", "video", caption: "Optional caption");
+```
+
+You can send cta_url message with:
+
+```php
+$builder->ctaUrl(
+    bodyText: "",
+    url: 'https://shortext.ny-corp.io',
+    urlCaption: 'Voire les détails'
+);
+```
+
+You can send payment message with:
+
+```php
+$builder->payment(
+    desription: "The message to display with 200 characters max length",
+    amount: 100,
+    currency: "XAF",
+    order_id: "<OPTIONAL ORDER ID>",
+    callback_url: "<YOUR OPTIONAL CALLBACK URL>"
+);
 ```
 
 ## Testing
