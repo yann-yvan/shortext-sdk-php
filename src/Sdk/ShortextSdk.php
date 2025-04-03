@@ -16,12 +16,14 @@ class ShortextSdk
     use ApiResponseTrait;
 
     protected PendingRequest $http;
+
     protected string $apiUrl;
+
     protected string $token;
 
     public function __construct(string $token, ?string $apiUrl = null)
     {
-        $this->apiUrl = $apiUrl ?? "https://shortext.ny-corp.io/api";
+        $this->apiUrl = $apiUrl ?? 'https://shortext.ny-corp.io/api';
         $this->token = $token;
         $this->http = Http::baseUrl($this->apiUrl)->withToken($this->token);
     }
@@ -29,8 +31,9 @@ class ShortextSdk
     protected function request($method, $endpoint, $data = []): DefResponse
     {
         try {
-            Log::debug($endpoint,$data);
+            Log::debug($endpoint, $data);
             $response = $this->http->{$method}($endpoint, $data);
+
             return DefResponse::parse(new JsonResponse($response->json()));
         } catch (Exception $e) {
             return new DefResponse(self::liteResponse(ResponseCode::REQUEST_EXCEPTION, [

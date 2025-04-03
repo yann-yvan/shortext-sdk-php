@@ -2,6 +2,4 @@
 
 namespace NyCorp\Shortext;
 
-class Shortext {
-
-}
+class Shortext {}

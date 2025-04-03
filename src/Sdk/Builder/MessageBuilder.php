@@ -5,11 +5,14 @@ namespace Nycorp\Shortext\Sdk\Builder;
 class MessageBuilder implements PayloadBuilder
 {
     protected array $contact;
+
     protected string $channel = 'whatsapp';
+
     protected string $from;
+
     protected array $message;
 
-    public function __construct($to, $from, $lastname = '',)
+    public function __construct($to, $from, $lastname = '')
     {
         $this->contact = [
             'phone' => $to,
@@ -24,6 +27,7 @@ class MessageBuilder implements PayloadBuilder
             'type' => 'text',
             'content' => ['text' => trim($text)],
         ];
+
         return $this;
     }
 
@@ -38,10 +42,11 @@ class MessageBuilder implements PayloadBuilder
                 'media_type' => $mediaType,
             ],
         ];
+
         return $this;
     }
 
-    public function payment(string $description, float $amount, string $currency, string $order_id = null, string $callback_url = null): static
+    public function payment(string $description, float $amount, string $currency, ?string $order_id = null, ?string $callback_url = null): static
     {
         return $this->interactive(
             bodyText: $description,
@@ -68,8 +73,9 @@ class MessageBuilder implements PayloadBuilder
                 'action' => $cta,
                 'payment_detail' => $payment_detail,
                 'buttons' => $buttons,
-            ]
+            ],
         ];
+
         return $this;
     }
 
@@ -79,7 +85,7 @@ class MessageBuilder implements PayloadBuilder
             bodyText: $bodyText,
             footer: $footer,
             header: $header ? [
-                'text' => $header
+                'text' => $header,
             ] : [],
             cta: [
                 'display_text' => $urlCaption,
@@ -98,6 +104,7 @@ class MessageBuilder implements PayloadBuilder
                 'params' => $params,
             ],
         ];
+
         return $this;
     }
 
