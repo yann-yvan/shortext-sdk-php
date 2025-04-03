@@ -72,7 +72,7 @@ You can send cta_url message with:
 
 ```php
 $builder->ctaUrl(
-    bodyText: "",
+    bodyText: "Hello this is body text",
     url: 'https://shortext.ny-corp.io',
     urlCaption: 'Voire les détails'
 );
