@@ -62,12 +62,6 @@ class MessageBuilder implements PayloadBuilder
     }
 
     /**
-     * @param string $bodyText
-     * @param string|null $footer
-     * @param array $header
-     * @param array $payment_detail
-     * @param array $cta
-     * @param string $type
      * @return $this
      */
     public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $payment_detail = [], array $cta = [], string $type = 'button'): static
@@ -141,11 +135,11 @@ class MessageBuilder implements PayloadBuilder
             footer: $footer,
             header: [
                 'type' => 'text',
-                'text' => $header
+                'text' => $header,
             ],
             cta: [
                 'button' => $ctaTitle,
-                'sections' => $sections
+                'sections' => $sections,
             ],
             type: 'list'
         );
@@ -154,19 +148,19 @@ class MessageBuilder implements PayloadBuilder
     /**
      * @return array{title: string, rows: array}
      */
-    #[ArrayShape(['title' => "string", 'rows' => "array"])]
+    #[ArrayShape(['title' => 'string', 'rows' => 'array'])]
     public function newListSection(string $title, array $rows): array
     {
         return [
             'title' => $title,
-            'rows' => $rows
+            'rows' => $rows,
         ];
     }
 
     /**
      * @return array{id: string, title: string, description: null|string}
      */
-    #[ArrayShape(['id' => "string", 'title' => "string", 'description' => "null|string"])]
+    #[ArrayShape(['id' => 'string', 'title' => 'string', 'description' => 'null|string'])]
     public function newListRow(string $id, string $title, ?string $description = null): array
     {
         return [
@@ -176,7 +170,7 @@ class MessageBuilder implements PayloadBuilder
         ];
     }
 
-    #[ArrayShape(['contact' => "array", 'channel' => "string", 'from' => "string", 'message' => "array"])]
+    #[ArrayShape(['contact' => 'array', 'channel' => 'string', 'from' => 'string', 'message' => 'array'])]
     public function getPayload(): array
     {
         return [
