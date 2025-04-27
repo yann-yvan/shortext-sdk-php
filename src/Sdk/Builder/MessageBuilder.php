@@ -2,6 +2,8 @@
 
 namespace Nycorp\Shortext\Sdk\Builder;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class MessageBuilder implements PayloadBuilder
 {
     protected array $contact;
@@ -59,7 +61,16 @@ class MessageBuilder implements PayloadBuilder
             type: 'payment');
     }
 
-    public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $payment_detail = [], array $cta = [], array $buttons = [], string $type = 'button'): static
+    /**
+     * @param string $bodyText
+     * @param string|null $footer
+     * @param array $header
+     * @param array $payment_detail
+     * @param array $cta
+     * @param string $type
+     * @return $this
+     */
+    public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $payment_detail = [], array $cta = [], string $type = 'button'): static
     {
         $this->message = [
             'type' => 'interactive',
@@ -72,7 +83,6 @@ class MessageBuilder implements PayloadBuilder
                 'footer' => $footer,
                 'action' => $cta,
                 'payment_detail' => $payment_detail,
-                'buttons' => $buttons,
             ],
         ];
 
@@ -108,6 +118,65 @@ class MessageBuilder implements PayloadBuilder
         return $this;
     }
 
+    public function satisfaction(string $bodyText, string $ctaTitle, array $choices, ?string $header = null, string $footer = 'Powered by https://shortext.ny-corp.io – Smart automation.'): self
+    {
+        return $this->interactiveList(
+            bodyText: $bodyText,
+            ctaTitle: $ctaTitle,
+            sections: [
+                $this->newListSection(
+                    title: 'Note',
+                    rows: $choices
+                ),
+            ],
+            header: $header,
+            footer: $footer
+        );
+    }
+
+    public function interactiveList(string $bodyText, string $ctaTitle, array $sections, ?string $header = null, ?string $footer = null): self
+    {
+        return $this->interactive(
+            bodyText: $bodyText,
+            footer: $footer,
+            header: [
+                'type' => 'text',
+                'text' => $header
+            ],
+            cta: [
+                'button' => $ctaTitle,
+                'sections' => $sections
+            ],
+            type: 'list'
+        );
+    }
+
+    /**
+     * @return array{title: string, rows: array}
+     */
+    #[ArrayShape(['title' => "string", 'rows' => "array"])]
+    public function newListSection(string $title, array $rows): array
+    {
+        return [
+            'title' => $title,
+            'rows' => $rows
+        ];
+    }
+
+    /**
+     * @return array{id: string, title: string, description: null|string}
+     */
+    #[ArrayShape(['id' => "string", 'title' => "string", 'description' => "null|string"])]
+    public function newListRow(string $id, string $title, ?string $description = null): array
+    {
+        return [
+            'id' => $id,
+            'title' => $title,
+            'description' => $description,
+        ];
+    }
+
+    #[ArrayShape(['contact' => "array", 'channel' => "string", 'from' => "string", 'message' => "array"])]
     public function getPayload(): array
     {
         return [
