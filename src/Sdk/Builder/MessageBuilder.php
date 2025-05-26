@@ -62,12 +62,6 @@ class MessageBuilder implements PayloadBuilder
     }
 
     /**
-     * @param string $bodyText
-     * @param string|null $footer
-     * @param array $header
-     * @param array $payment_detail
-     * @param array $cta
-     * @param string $type
      * @return $this
      */
     public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $payment_detail = [], array $cta = [], string $type = 'button'): static
@@ -118,7 +112,7 @@ class MessageBuilder implements PayloadBuilder
         return $this;
     }
 
-    #[ArrayShape(['contact' => "array", 'channel' => "string", 'from' => "string", 'message' => "array"])]
+    #[ArrayShape(['contact' => 'array', 'channel' => 'string', 'from' => 'string', 'message' => 'array'])]
     public function getPayload(): array
     {
         return [
@@ -129,15 +123,7 @@ class MessageBuilder implements PayloadBuilder
         ];
     }
 
-    /**
-     * @param string $bodyText
-     * @param string $ctaTitle
-     * @param array $choices
-     * @param string|null $header
-     * @param string $footer
-     * @return self
-     */
-    #[ArrayShape(['bodyText' => "string", 'ctaTitle' => "string", 'choices' => "section[]", "header" => "string", "footer" => "string"])]
+    #[ArrayShape(['bodyText' => 'string', 'ctaTitle' => 'string', 'choices' => 'section[]', 'header' => 'string', 'footer' => 'string'])]
     public function satisfaction(string $bodyText, string $ctaTitle, array $choices, ?string $header = null, string $footer = 'Powered by https://shortext.ny-corp.io – Smart automation.'): self
     {
         return $this->interactiveList(
@@ -154,15 +140,7 @@ class MessageBuilder implements PayloadBuilder
         );
     }
 
-    /**
-     * @param string $bodyText
-     * @param string $ctaTitle
-     * @param array $sections
-     * @param string|null $header
-     * @param string|null $footer
-     * @return self
-     */
-    #[ArrayShape(['bodyText' => "ctaTitle", 'title' => "string", 'section' => "section[]", "header" => "string", "footer" => "string"])]
+    #[ArrayShape(['bodyText' => 'ctaTitle', 'title' => 'string', 'section' => 'section[]', 'header' => 'string', 'footer' => 'string'])]
     public function interactiveList(string $bodyText, string $ctaTitle, array $sections, ?string $header = null, ?string $footer = null): self
     {
         return $this->interactive(
@@ -170,37 +148,32 @@ class MessageBuilder implements PayloadBuilder
             footer: $footer,
             header: $header ? [
                 'type' => 'text',
-                'text' => $header
+                'text' => $header,
             ] : [],
             cta: [
                 'button' => $ctaTitle,
-                'sections' => $sections
+                'sections' => $sections,
             ],
             type: 'list'
         );
     }
 
     /**
-     * @param string $title
-     * @param array $rows
      * @return array{title: string, rows: array}
      */
-    #[ArrayShape(['title' => "string", 'rows' => "array"])]
+    #[ArrayShape(['title' => 'string', 'rows' => 'array'])]
     public function newListSection(string $title, array $rows): array
     {
         return [
             'title' => $title,
-            'rows' => $rows
+            'rows' => $rows,
         ];
     }
 
     /**
-     * @param string $id
-     * @param string $title
-     * @param string|null $description
      * @return array{id: string, title: string, description: null|string}
      */
-    #[ArrayShape(['id' => "string", 'title' => "string", 'description' => "null|string"])]
+    #[ArrayShape(['id' => 'string', 'title' => 'string', 'description' => 'null|string'])]
     public function newListRow(string $id, string $title, ?string $description = null): array
     {
         return [
