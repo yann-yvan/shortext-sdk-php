@@ -105,13 +105,24 @@ class MessageBuilder implements PayloadBuilder
         );
     }
 
-    public function template($templateName, $params = []): static
+    /**
+     * @param string $templateName
+     * @param string $language
+     * @param array $body
+     * @param array $header
+     * @param array $buttons
+     * @return $this
+     */
+    public function template(string $templateName, string $language, array $body, array $header, array $buttons): static
     {
         $this->message = [
             'type' => 'template',
             'content' => [
                 'template_name' => $templateName,
-                'params' => $params,
+                'language' => $templateName,
+                'header' => $header,
+                'body' => $body,
+                'buttons' => $buttons
             ],
         ];
 
