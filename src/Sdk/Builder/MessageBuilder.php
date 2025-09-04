@@ -107,13 +107,13 @@ class MessageBuilder implements PayloadBuilder
      * @param array $buttons
      * @return $this
      */
-    public function template(string $templateName, string $language, array $body, array $header, array $buttons): static
+    public function template(string $templateName, string $language, array $body, array $header = [], array $buttons = []): static
     {
         $this->message = [
             'type' => 'template',
             'content' => [
                 'template_name' => $templateName,
-                'language' => $templateName,
+                'language' => $language,
                 'header' => $header,
                 'body' => $body,
                 'buttons' => $buttons
@@ -151,7 +151,15 @@ class MessageBuilder implements PayloadBuilder
         );
     }
 
-    #[ArrayShape(['bodyText' => 'ctaTitle', 'title' => 'string', 'section' => 'section[]', 'header' => 'string', 'footer' => 'string'])]
+    /**
+     * @param string $bodyText
+     * @param string $ctaTitle
+     * @param array $sections
+     * @param string|null $header
+     * @param string|null $footer
+     * @return self
+     */
+    #[ArrayShape(['bodyText' => "ctaTitle", 'title' => "string", 'section' => "section[]", "header" => "string", "footer" => "string"])]
     public function interactiveList(string $bodyText, string $ctaTitle, array $sections, ?string $header = null, ?string $footer = null): self
     {
         return $this->interactive(
@@ -159,11 +167,11 @@ class MessageBuilder implements PayloadBuilder
             footer: $footer,
             header: $header ? [
                 'type' => 'text',
-                'text' => $header,
+                'text' => $header
             ] : [],
             cta: [
                 'button' => $ctaTitle,
-                'sections' => $sections,
+                'sections' => $sections
             ],
             type: 'list'
         );
