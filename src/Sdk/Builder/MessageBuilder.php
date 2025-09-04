@@ -100,11 +100,6 @@ class MessageBuilder implements PayloadBuilder
     }
 
     /**
-     * @param string $templateName
-     * @param string $language
-     * @param array $body
-     * @param array $header
-     * @param array $buttons
      * @return $this
      */
     public function template(string $templateName, string $language, array $body, array $header = [], array $buttons = []): static
@@ -116,7 +111,7 @@ class MessageBuilder implements PayloadBuilder
                 'language' => $language,
                 'header' => $header,
                 'body' => $body,
-                'buttons' => $buttons
+                'buttons' => $buttons,
             ],
         ];
 
