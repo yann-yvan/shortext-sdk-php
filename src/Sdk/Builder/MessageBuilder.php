@@ -146,15 +146,7 @@ class MessageBuilder implements PayloadBuilder
         );
     }
 
-    /**
-     * @param string $bodyText
-     * @param string $ctaTitle
-     * @param array $sections
-     * @param string|null $header
-     * @param string|null $footer
-     * @return self
-     */
-    #[ArrayShape(['bodyText' => "ctaTitle", 'title' => "string", 'section' => "section[]", "header" => "string", "footer" => "string"])]
+    #[ArrayShape(['bodyText' => 'ctaTitle', 'title' => 'string', 'section' => 'section[]', 'header' => 'string', 'footer' => 'string'])]
     public function interactiveList(string $bodyText, string $ctaTitle, array $sections, ?string $header = null, ?string $footer = null): self
     {
         return $this->interactive(
@@ -162,11 +154,11 @@ class MessageBuilder implements PayloadBuilder
             footer: $footer,
             header: $header ? [
                 'type' => 'text',
-                'text' => $header
+                'text' => $header,
             ] : [],
             cta: [
                 'button' => $ctaTitle,
-                'sections' => $sections
+                'sections' => $sections,
             ],
             type: 'list'
         );
