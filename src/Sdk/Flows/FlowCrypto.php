@@ -40,7 +40,7 @@ class FlowCrypto
         $aes->setTag($encryptedFlowDataTag);
 
         $decrypted = $aes->decrypt($encryptedFlowDataBody);
-        if (!$decrypted) {
+        if (! $decrypted) {
             throw new Exception('Decryption of flow data failed.');
         }
 
@@ -54,6 +54,7 @@ class FlowCrypto
 
         // Encrypt the response data
         $cipher = openssl_encrypt(json_encode($response), 'aes-128-gcm', $aesKeyBuffer, OPENSSL_RAW_DATA, $flipped_iv, $tag);
-        return base64_encode($cipher . $tag);
+
+        return base64_encode($cipher.$tag);
     }
 }

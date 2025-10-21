@@ -5,14 +5,11 @@ namespace NyCorp\Shortext\Sdk\Flows;
 class FlowCryptoData
 {
     private array $decryptedBody = [];
+
     private string $aesKeyBuffer;
+
     private string $initialVectorBuffer;
 
-    /**
-     * @param array $decryptedBody
-     * @param string $aesKeyBuffer
-     * @param string $initialVectorBuffer
-     */
     public function __construct(array $decryptedBody, string $aesKeyBuffer, string $initialVectorBuffer)
     {
         $this->decryptedBody = $decryptedBody;
