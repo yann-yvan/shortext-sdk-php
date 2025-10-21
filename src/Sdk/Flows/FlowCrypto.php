@@ -8,9 +8,7 @@ use phpseclib3\Crypt\RSA;
 
 class FlowCrypto
 {
-    private FlowCryptoData $cryptoData;
-
-    public function decrypt(array $body, string $privatePem): FlowCryptoData
+    public function decryptRequest(array $body, string $privatePem): FlowCryptoData
     {
         $encryptedAesKey = base64_decode($body['encrypted_aes_key'], true);
         $encryptedFlowData = base64_decode($body['encrypted_flow_data']);
@@ -42,7 +40,7 @@ class FlowCrypto
         $aes->setTag($encryptedFlowDataTag);
 
         $decrypted = $aes->decrypt($encryptedFlowDataBody);
-        if (!$decrypted) {
+        if (! $decrypted) {
             throw new Exception('Decryption of flow data failed.');
         }
 
