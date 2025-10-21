@@ -49,7 +49,7 @@ class FlowCrypto
         return $this->cryptoData;
     }
 
-    public function encrypt($response, FlowCryptoData $cryptoData = null): string
+    public function encrypt($response, ?FlowCryptoData $cryptoData = null): string
     {
         $cryptoData = $cryptoData ?? $this->cryptoData;
 
@@ -58,6 +58,7 @@ class FlowCrypto
 
         // Encrypt the response data
         $cipher = openssl_encrypt(json_encode($response), 'aes-128-gcm', $cryptoData->getAesKeyBuffer(), OPENSSL_RAW_DATA, $flipped_iv, $tag);
-        return base64_encode($cipher . $tag);
+
+        return base64_encode($cipher.$tag);
     }
 }
