@@ -8,7 +8,9 @@ use phpseclib3\Crypt\RSA;
 
 class FlowCrypto
 {
-    public function decryptRequest(array $body, string $privatePem): FlowCryptoData
+    private FlowCryptoData $cryptoData;
+
+    public function decrypt(array $body, string $privatePem): FlowCryptoData
     {
         $encryptedAesKey = base64_decode($body['encrypted_aes_key'], true);
         $encryptedFlowData = base64_decode($body['encrypted_flow_data']);
@@ -44,16 +46,20 @@ class FlowCrypto
             throw new Exception('Decryption of flow data failed.');
         }
 
-        return new FlowCryptoData(json_decode($decrypted, true), $decryptedAesKey, $initialVector);
+        $this->cryptoData = new FlowCryptoData(json_decode($decrypted, true), $decryptedAesKey, $initialVector);
+
+        return $this->cryptoData;
     }
 
-    public function encryptResponse($response, $aesKeyBuffer, $initialVectorBuffer): string
+    public function encrypt($response, FlowCryptoData $cryptoData = null): string
     {
+        $cryptoData = $cryptoData ?? $this->cryptoData;
+
         // Flip the initialization vector
-        $flipped_iv = ~$initialVectorBuffer;
+        $flipped_iv = ~$cryptoData->getInitialVectorBuffer();
 
         // Encrypt the response data
-        $cipher = openssl_encrypt(json_encode($response), 'aes-128-gcm', $aesKeyBuffer, OPENSSL_RAW_DATA, $flipped_iv, $tag);
+        $cipher = openssl_encrypt(json_encode($response), 'aes-128-gcm', $cryptoData->getAesKeyBuffer(), OPENSSL_RAW_DATA, $flipped_iv, $tag);
         return base64_encode($cipher . $tag);
     }
 }
