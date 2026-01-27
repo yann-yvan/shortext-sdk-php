@@ -2,23 +2,22 @@
 
 namespace NyCorp\Shortext\Sdk\Builder\Interactive;
 
-
 use NyCorp\Shortext\Sdk\Builder\MessageBuilder;
 
 abstract class WaInteractiveMessage extends MessageBuilder
 {
     private string $body;
+
     private ?string $footer = null;
+
     private array $payment_detail = [];
+
     private array $header = [];
 
-    /**
-     * @param string $body
-     * @return WaInteractiveMessage
-     */
     public function setBody(string $body): self
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -50,13 +49,10 @@ abstract class WaInteractiveMessage extends MessageBuilder
 
     abstract public function cta_actions(): array;
 
-    /**
-     * @param string|null $footer
-     * @return WaInteractiveMessage
-     */
     public function setFooter(?string $footer): self
     {
         $this->footer = $footer;
+
         return $this;
     }
 
@@ -70,9 +66,10 @@ abstract class WaInteractiveMessage extends MessageBuilder
         $this->header = [
             'type' => $type,
             $type => $type === 'text' ? $value : [
-                'link' => $value
-            ]
+                'link' => $value,
+            ],
         ];
+
         return $this;
     }
 }

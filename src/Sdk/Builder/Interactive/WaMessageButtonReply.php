@@ -5,7 +5,9 @@ namespace NyCorp\Shortext\Sdk\Builder\Interactive;
 class WaMessageButtonReply extends WaInteractiveMessage
 {
     use MediaHeader;
+
     private array $buttons = [];
+
     public function type(): string
     {
         return 'button';
@@ -19,6 +21,7 @@ class WaMessageButtonReply extends WaInteractiveMessage
     public function addButton(string $id, string $title): self
     {
         $this->buttons[] = ['id' => $id, 'title' => $title];
+
         return $this;
     }
 
