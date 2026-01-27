@@ -1,6 +1,6 @@
 <?php
 
-namespace Nycorp\Shortext\Sdk\Builder;
+namespace NyCorp\Shortext\Sdk\Builder;
 
 use JetBrains\PhpStorm\ArrayShape;
 
