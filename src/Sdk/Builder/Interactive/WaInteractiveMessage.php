@@ -65,9 +65,7 @@ abstract class WaInteractiveMessage extends MessageBuilder
     {
         $this->header = [
             'type' => $type,
-            $type => $type === 'text' ? $value : [
-                'link' => $value,
-            ],
+            $type === 'text' ? $type : 'url' => $value,
         ];
 
         return $this;
