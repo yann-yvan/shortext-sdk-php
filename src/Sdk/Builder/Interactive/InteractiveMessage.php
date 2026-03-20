@@ -4,7 +4,7 @@ namespace NyCorp\Shortext\Sdk\Builder\Interactive;
 
 use NyCorp\Shortext\Sdk\Builder\MessageBuilder;
 
-abstract class WaInteractiveMessage extends MessageBuilder
+abstract class InteractiveMessage extends MessageBuilder
 {
     private string $body;
 
@@ -32,8 +32,8 @@ abstract class WaInteractiveMessage extends MessageBuilder
                 ],
                 'header' => $this->header,
                 'footer' => $this->footer,
-                $this->actionKey() => $this->cta_actions(),
-                'payment_detail' => $this->payment_detail,
+                'items' => $this->items(),
+                'meta' => $this->payment_detail,
             ],
         ];
 
@@ -42,12 +42,7 @@ abstract class WaInteractiveMessage extends MessageBuilder
 
     abstract public function type(): string;
 
-    public function actionKey(): string
-    {
-        return 'action';
-    }
-
-    abstract public function cta_actions(): array;
+    abstract public function items(): array;
 
     public function setFooter(?string $footer): self
     {

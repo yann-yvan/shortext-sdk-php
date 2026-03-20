@@ -14,13 +14,14 @@ class MessageBuilder implements PayloadBuilder
 
     protected array $message;
 
-    public function __construct($to, $from, $lastname = '')
+    public function __construct($to, $from, $lastname = '', $channel = 'whatsapp')
     {
         $this->contact = [
-            'phone' => $to,
+            'identifier' => $to,
             'profile' => ['lastname' => $lastname],
         ];
         $this->from = $from;
+        $this->channel = $channel;
     }
 
     public function text($text): static
@@ -52,31 +53,28 @@ class MessageBuilder implements PayloadBuilder
     {
         return $this->interactive(
             bodyText: $description,
-            payment_detail: [
+            cta: ['parameters' => [
                 'amount' => $amount,
                 'currency' => $currency,
                 'order_id' => $order_id,
                 'callback_url' => $callback_url,
-            ],
+            ]],
             type: 'payment');
     }
 
     /**
      * @return $this
      */
-    public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $payment_detail = [], array $cta = [], string $type = 'button'): static
+    public function interactive(string $bodyText, ?string $footer = null, array $header = [], array $cta = [], string $type = 'button'): static
     {
         $this->message = [
             'type' => 'interactive',
             'content' => [
                 'type' => $type,
-                'body' => [
-                    'text' => $bodyText,
-                ],
+                'body' => $bodyText,
                 'header' => $header,
                 'footer' => $footer,
-                'action' => $cta,
-                'payment_detail' => $payment_detail,
+                'action' => $cta
             ],
         ];
 
@@ -92,8 +90,10 @@ class MessageBuilder implements PayloadBuilder
                 'text' => $header,
             ] : [],
             cta: [
-                'display_text' => $urlCaption,
-                'url' => $url,
+                'parameters' => [
+                    'display_text' => $urlCaption,
+                    'url' => $url,
+                ]
             ],
             type: 'cta_url'
         );

@@ -2,7 +2,7 @@
 
 namespace NyCorp\Shortext\Sdk\Builder\Interactive;
 
-class WaMessageButtonReply extends WaInteractiveMessage
+class MessageButtonReply extends InteractiveMessage
 {
     use MediaHeader;
 
@@ -13,7 +13,7 @@ class WaMessageButtonReply extends WaInteractiveMessage
         return 'button';
     }
 
-    public function cta_actions(): array
+    public function items(): array
     {
         return collect($this->buttons)->take(3)->all();
     }
@@ -23,10 +23,5 @@ class WaMessageButtonReply extends WaInteractiveMessage
         $this->buttons[] = ['id' => $id, 'title' => $title];
 
         return $this;
-    }
-
-    public function actionKey(): string
-    {
-        return 'buttons';
     }
 }
