@@ -74,7 +74,7 @@ class MessageBuilder implements PayloadBuilder
                 'body' => $bodyText,
                 'header' => $header,
                 'footer' => $footer,
-                'action' => $cta
+                'action' => $cta,
             ],
         ];
 
@@ -93,7 +93,7 @@ class MessageBuilder implements PayloadBuilder
                 'parameters' => [
                     'display_text' => $urlCaption,
                     'url' => $url,
-                ]
+                ],
             ],
             type: 'cta_url'
         );
