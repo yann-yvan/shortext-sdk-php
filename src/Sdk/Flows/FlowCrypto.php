@@ -3,8 +3,8 @@
 namespace NyCorp\Shortext\Sdk\Flows;
 
 use Exception;
-use phpseclib3\Crypt\AES;
-use phpseclib3\Crypt\RSA;
+use phpseclib4\Crypt\AES;
+use phpseclib4\Crypt\RSA;
 
 class FlowCrypto
 {
