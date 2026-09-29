@@ -24,14 +24,14 @@ abstract class InteractiveMessage extends MessageBuilder
     public function getPayload(): array
     {
         $this->message = [
-            'type' => 'interactive',
+            'type'    => 'interactive',
             'content' => [
-                'type' => $this->type(),
-                'body' => $this->body,
+                'type'   => $this->type(),
+                'body'   => $this->body,
                 'header' => $this->header,
                 'footer' => $this->footer,
                 'action' => $this->items(),
-                'meta' => $this->payment_detail,
+                'meta'   => $this->payment_detail,
             ],
         ];
 
@@ -54,12 +54,16 @@ abstract class InteractiveMessage extends MessageBuilder
         return $this->addHeader('text', $text);
     }
 
-    protected function addHeader(string $type, string $value): self
+    protected function addHeader(string $type, string $value, ?string $filename = null): self
     {
         $this->header = [
-            'type' => $type,
+            'type'  => $type,
             'value' => $value,
         ];
+
+        if($filename){
+            $this->header['filename'] = $filename;
+        }
 
         return $this;
     }

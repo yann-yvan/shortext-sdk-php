@@ -14,8 +14,8 @@ trait MediaHeader
         return $this->addHeader('video', $url);
     }
 
-    public function addDocumentHeader(string $url): self
+    public function addDocumentHeader(string $url, string $filename = 'document.pdf'): self
     {
-        return $this->addHeader('document', $url);
+        return $this->addHeader('document', $url, $filename);
     }
 }
