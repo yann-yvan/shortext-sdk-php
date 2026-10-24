@@ -2,7 +2,7 @@
 
 All notable changes to `shortext-php` will be documented in this file.
 
-## 2.0.0 - Unreleased
+## 2.0.0 - 2026-10-24
 
 The SDK now covers the whole Shortext API v2.0 and runs outside Laravel. See "Upgrading from 1.x" in the README.
 
