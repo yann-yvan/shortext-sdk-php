@@ -27,6 +27,14 @@ it('builds a template with a media header', function () {
         ->toBe(['template_name' => 'receipt', 'language' => 'en', 'header' => ['url' => 'https://cdn.example.com/r.pdf']]);
 });
 
+it('builds a template with button values and an authentication code', function () {
+    expect(Message::template('promo', 'fr')->body(['name' => 'Awa'])->buttonValues([1 => 'oct', 2 => 'SAVE20'])->toArray()['content'])
+        ->toBe(['template_name' => 'promo', 'language' => 'fr', 'body' => ['name' => 'Awa'], 'buttons' => [1 => 'oct', 2 => 'SAVE20']])
+        ->and(json_encode(Message::template('promo', 'fr')->buttonValues([1 => 'oct'])->toArray()['content']['buttons']))->toBe('{"1":"oct"}')
+        ->and(Message::template('login_code', 'en')->code('123456')->toArray()['content'])
+        ->toBe(['template_name' => 'login_code', 'language' => 'en', 'code' => '123456']);
+});
+
 it('builds media messages', function () {
     expect(Message::image('https://a.com/i.png', 'Receipt')->toArray())
         ->toBe(['type' => 'media', 'content' => ['media_type' => 'image', 'media_url' => 'https://a.com/i.png', 'caption' => 'Receipt']])

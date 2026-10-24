@@ -2,6 +2,14 @@
 
 All notable changes to `shortext-php` will be documented in this file.
 
+## 2.1.0 - 2026-10-25
+
+### Added
+
+- `TemplateMessage::buttonValues()`: the value of the template buttons by index (end of a dynamic link, coupon code,
+  quick reply payload), checked by the API against the template.
+- `TemplateMessage::code()`: the code of an authentication template, put by Shortext in the message and in its code button.
+
 ## 2.0.0 - 2026-10-24
 
 The SDK now covers the whole Shortext API v2.0 and runs outside Laravel. See "Upgrading from 1.x" in the README.

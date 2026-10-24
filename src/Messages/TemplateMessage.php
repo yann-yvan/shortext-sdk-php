@@ -18,6 +18,8 @@ class TemplateMessage extends Message
 
     protected ?string $category = null;
 
+    protected ?string $code = null;
+
     public function __construct(protected string $name, protected string $language)
     {
         parent::__construct(self::TEMPLATE);
@@ -56,13 +58,35 @@ class TemplateMessage extends Message
     }
 
     /**
-     * Parameters of the template buttons (e.g. the variable suffix of a URL button)
+     * Raw Meta parameters of the template buttons; buttonValues() is the short form
      *
      * @param  array<mixed>  $buttons
      */
     public function buttonParameters(array $buttons): static
     {
         $this->buttons = $buttons;
+
+        return $this;
+    }
+
+    /**
+     * Value of the buttons that need one, by index (GET /templates: buttons[].needs_value):
+     * the end of a dynamic link, the coupon of a copy code button, a quick reply payload.
+     * [1 => 'A-42', 2 => 'SAVE20']
+     *
+     * @param  array<int, string|int>  $values
+     */
+    public function buttonValues(array $values): static
+    {
+        $this->buttons = array_map('strval', $values);
+
+        return $this;
+    }
+
+    /** The code of an authentication template: Shortext puts it in the message and in its code button */
+    public function code(string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }
@@ -84,6 +108,7 @@ class TemplateMessage extends Message
             'header' => $this->header,
             'buttons' => $this->buttons,
             'category' => $this->category,
+            'code' => $this->code,
         ], static fn ($value) => $value !== null && $value !== []);
     }
 }

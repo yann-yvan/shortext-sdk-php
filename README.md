@@ -161,6 +161,12 @@ Message::template('order_update', 'fr')
 
 Message::template('receipt', 'en')->headerMedia('https://cdn.example.com/receipt.pdf'); // IMAGE/VIDEO/DOCUMENT header
 
+// Buttons that need a value, by index (GET /templates: buttons[].needs_value): end of a dynamic link, coupon code
+Message::template('autumn_sale', 'fr')->body(['name' => 'Awa'])->buttonValues([1 => 'oct', 2 => 'SAVE20']);
+
+// Authentication template: only the code (put in the message and in the code button)
+Message::template('login_code', 'fr')->code('482913');
+
 // Media
 Message::image('https://cdn.example.com/a.png', caption: 'Your receipt');
 Message::video('https://cdn.example.com/a.mp4');
