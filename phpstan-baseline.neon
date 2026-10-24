@@ -1,0 +1,58 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '''
+				#^Access to property \$message of deprecated class NyCorp\\Shortext\\Sdk\\Builder\\MessageBuilder\:
+				since 2\.0, use NyCorp\\Shortext\\Messages\\Message and NyCorp\\Shortext\\Messages\\Contact$#
+			'''
+			identifier: property.deprecatedClass
+			count: 1
+			path: src/Sdk/Builder/Interactive/InteractiveMessage.php
+
+		-
+			message: '''
+				#^Call to method getPayload\(\) of deprecated class NyCorp\\Shortext\\Sdk\\Builder\\MessageBuilder\:
+				since 2\.0, use NyCorp\\Shortext\\Messages\\Message and NyCorp\\Shortext\\Messages\\Contact$#
+			'''
+			identifier: method.deprecatedClass
+			count: 1
+			path: src/Sdk/Builder/Interactive/InteractiveMessage.php
+
+		-
+			message: '''
+				#^Class NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\InteractiveMessage extends deprecated class NyCorp\\Shortext\\Sdk\\Builder\\MessageBuilder\:
+				since 2\.0, use NyCorp\\Shortext\\Messages\\Message and NyCorp\\Shortext\\Messages\\Contact$#
+			'''
+			identifier: class.extendsDeprecatedClass
+			count: 1
+			path: src/Sdk/Builder/Interactive/InteractiveMessage.php
+
+		-
+			message: '#^Method NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply\:\:addDocumentHeader\(\) should return NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply but returns NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\InteractiveMessage\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Sdk/Builder/Interactive/MessageButtonReply.php
+
+		-
+			message: '#^Method NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply\:\:addImageHeader\(\) should return NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply but returns NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\InteractiveMessage\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Sdk/Builder/Interactive/MessageButtonReply.php
+
+		-
+			message: '#^Method NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply\:\:addVideoHeader\(\) should return NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\MessageButtonReply but returns NyCorp\\Shortext\\Sdk\\Builder\\Interactive\\InteractiveMessage\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Sdk/Builder/Interactive/MessageButtonReply.php
+
+		-
+			message: '#^Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist\.$#'
+			identifier: attribute.notFound
+			count: 5
+			path: src/Sdk/Builder/MessageBuilder.php
+
+		-
+			message: '#^Call to an undefined method phpseclib4\\Crypt\\RSA\:\:decrypt\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Sdk/Flows/FlowCrypto.php

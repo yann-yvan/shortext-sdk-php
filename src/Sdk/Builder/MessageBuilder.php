@@ -4,6 +4,11 @@ namespace NyCorp\Shortext\Sdk\Builder;
 
 use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ * 1.x message builder (POST /messages/send).
+ *
+ * @deprecated since 2.0, use NyCorp\Shortext\Messages\Message and NyCorp\Shortext\Messages\Contact
+ */
 class MessageBuilder implements PayloadBuilder
 {
     protected array $contact;
@@ -87,7 +92,8 @@ class MessageBuilder implements PayloadBuilder
             bodyText: $bodyText,
             footer: $footer,
             header: $header ? [
-                'text' => $header,
+                'type' => 'text',
+                'value' => $header,
             ] : [],
             cta: [
                 'parameters' => [
@@ -154,7 +160,7 @@ class MessageBuilder implements PayloadBuilder
             footer: $footer,
             header: $header ? [
                 'type' => 'text',
-                'text' => $header,
+                'value' => $header,
             ] : [],
             cta: [
                 'button' => $ctaTitle,

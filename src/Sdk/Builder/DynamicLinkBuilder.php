@@ -1,6 +1,6 @@
 <?php
 
-namespace Nycorp\Shortext\Sdk\Builder;
+namespace NyCorp\Shortext\Sdk\Builder;
 
 class DynamicLinkBuilder implements PayloadBuilder
 {
@@ -12,9 +12,9 @@ class DynamicLinkBuilder implements PayloadBuilder
 
     protected ?int $ttl = null;
 
-    private ?string $android_package_name;
+    private ?string $android_package_name = null;
 
-    private ?string $ios_package_name;
+    private ?string $ios_package_name = null;
 
     public function setFallbackUrl(string $fallback_url): DynamicLinkBuilder
     {

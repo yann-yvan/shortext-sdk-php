@@ -1,45 +1,48 @@
 <?php
 
-namespace Nycorp\Shortext\Sdk;
+namespace NyCorp\Shortext\Sdk;
 
-use Exception;
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Nycorp\LiteApi\Models\ResponseCode;
-use Nycorp\LiteApi\Response\DefResponse;
-use Nycorp\LiteApi\Traits\ApiResponseTrait;
+use NyCorp\Shortext\Exceptions\TransportException;
+use NyCorp\Shortext\Http\HttpClient;
+use NyCorp\Shortext\Http\Response;
+use NyCorp\Shortext\ResponseCode;
+use NyCorp\Shortext\Shortext;
 
+/**
+ * @deprecated since 2.0, use NyCorp\Shortext\Shortext
+ */
 class ShortextSdk
 {
-    use ApiResponseTrait;
-
-    protected PendingRequest $http;
+    protected HttpClient $http;
 
     protected string $apiUrl;
 
     protected string $token;
 
-    public function __construct(string $token, ?string $apiUrl = null)
+    /**
+     * @param  array{timeout?: float, connect_timeout?: float, headers?: array<string, string>, handler?: callable}  $options
+     */
+    public function __construct(string $token, ?string $apiUrl = null, array $options = [])
     {
-        $this->apiUrl = $apiUrl ?? 'https://shortext.ny-corp.io/api';
+        $this->apiUrl = $apiUrl ?? Shortext::DEFAULT_BASE_URL;
         $this->token = $token;
-        $this->http = Http::baseUrl($this->apiUrl)->withToken($this->token);
+        $this->http = new HttpClient($this->token, $this->apiUrl, $options);
     }
 
-    protected function request($method, $endpoint, $data = []): DefResponse
+    /**
+     * Never throws, as in 1.x: a failure is a Response with isSuccess() = false
+     */
+    protected function request(string $method, string $endpoint, array $data = []): Response
     {
         try {
-            Log::debug($endpoint, $data);
-            $response = $this->http->{$method}($endpoint, $data);
-
-            return DefResponse::parse(new JsonResponse($response->json()));
-        } catch (Exception $e) {
-            return new DefResponse(self::liteResponse(ResponseCode::REQUEST_EXCEPTION, [
-                'error' => true,
+            return $this->http->request(strtoupper($method), $endpoint, json: $data);
+        } catch (TransportException $e) {
+            return new Response($e->status() ?? 0, [], [
+                'success' => false,
+                'code' => ResponseCode::REQUEST_EXCEPTION,
                 'message' => $e->getMessage(),
-            ]));
+                'body' => ['error' => true, 'message' => $e->getMessage()],
+            ]);
         }
     }
 }

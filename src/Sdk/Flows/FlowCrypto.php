@@ -6,8 +6,13 @@ use Exception;
 use phpseclib4\Crypt\AES;
 use phpseclib4\Crypt\RSA;
 
+/**
+ * Encryption of the WhatsApp Flows data endpoint. Requires phpseclib/phpseclib ^4.0.
+ */
 class FlowCrypto
 {
+    private ?FlowCryptoData $cryptoData = null;
+
     public function decrypt(array $body, string $privatePem): FlowCryptoData
     {
         $encryptedAesKey = base64_decode($body['encrypted_aes_key'], true);

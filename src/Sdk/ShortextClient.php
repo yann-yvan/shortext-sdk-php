@@ -1,19 +1,24 @@
 <?php
 
-namespace Nycorp\Shortext\Sdk;
+namespace NyCorp\Shortext\Sdk;
 
-use Nycorp\LiteApi\Response\DefResponse;
-use Nycorp\Shortext\Sdk\Builder\DynamicLinkBuilder;
-use Nycorp\Shortext\Sdk\Builder\MessageBuilder;
+use NyCorp\Shortext\Http\Response;
+use NyCorp\Shortext\Sdk\Builder\DynamicLinkBuilder;
+use NyCorp\Shortext\Sdk\Builder\MessageBuilder;
 
+/**
+ * 1.x client, kept for existing projects.
+ *
+ * @deprecated since 2.0, use NyCorp\Shortext\Shortext: ->v1()->sendMessage(), ->conversations()->start() / reply()
+ */
 class ShortextClient extends ShortextSdk
 {
-    public function sendMessage(MessageBuilder $builder): DefResponse
+    public function sendMessage(MessageBuilder $builder): Response
     {
         return $this->request('POST', '/messages/send', $builder->getPayload());
     }
 
-    public function createDynamicLink(DynamicLinkBuilder $builder): DefResponse
+    public function createDynamicLink(DynamicLinkBuilder $builder): Response
     {
         return $this->request('POST', '/deep-link/add', $builder->getPayload());
     }
